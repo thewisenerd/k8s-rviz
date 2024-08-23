@@ -140,15 +140,20 @@ function onPods(pods: Pod[]) {
     kv.set('nodes:podList', pods);
 }
 
-addFormListener('pods', 'user-input-pods', processPods, onPods);
-addFormListener('nodes', 'user-input-nodes', processNodes, onNodes);
 
-const existingNodes = kv.load<Node[]>('nodes:nodeList');
-if (existingNodes) {
-    onNodes(existingNodes);
+function init() {
+    addFormListener('pods', 'user-input-pods', processPods, onPods);
+    addFormListener('nodes', 'user-input-nodes', processNodes, onNodes);
+
+    const existingNodes = kv.load<Node[]>('nodes:nodeList');
+    if (existingNodes) {
+        onNodes(existingNodes);
+    }
+
+    const existingPods = kv.load<Pod[]>('nodes:podList');
+    if (existingPods) {
+        onPods(existingPods);
+    }
 }
 
-const existingPods = kv.load<Pod[]>('nodes:podList');
-if (existingPods) {
-    onPods(existingPods);
-}
+init();
