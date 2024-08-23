@@ -1,0 +1,67 @@
+<html lang="en">
+<head>
+    <title>k8s-rviz - pods &amp; nodes</title>
+    <style>
+        body {
+            font-family: monospace;
+        }
+
+        .nodechart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #root {
+            display: grid;
+            grid-template-rows: auto;
+            grid-template-columns: 50% 50%;
+        }
+
+        #statusText {
+            display: block;
+            position: absolute;
+            background: #fff;
+            padding: 5px;
+            border: 1px solid black;
+            border-radius: 2px;
+        }
+
+        #user-input {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+        }
+
+        #user-input > .input-group {
+            padding: 4px;
+            border: 1px solid black;
+            display: flex;
+            flex-direction: column;
+        }
+        #user-input > .input-group > .msg {
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<div id="user-input">
+    <div id="user-input-pods-group" class="input-group">
+        <label for="user-input-pods">
+            input pods:
+            <input type="file" id="user-input-pods" accept="application/json">
+        </label>
+        <span class="msg"></span>
+    </div>
+    <div id="user-input-nodes-group" class="input-group">
+        <label for="user-input-nodes">
+            input nodes:
+            <input type="file" id="user-input-nodes" accept="application/json">
+        </label>
+        <span class="msg"></span>
+    </div>
+</div>
+<div id="root"></div>
+</body>
+<script src="dist/nodes.js"></script>
+</html>
