@@ -49,3 +49,21 @@ export function set<T>(key: string, value: T): void {
         return;
     }
 }
+
+function removeImpl(key: string): void {
+    if (!hasLocalStorage) {
+        return
+    }
+
+    key = keyPrefix + key;
+    return localStorage.removeItem(key)
+}
+
+export function remove(key: string): void {
+    try {
+        return removeImpl(key);
+    } catch (err) {
+        console.error(`failed to remove key=${key} from localStorage`, err);
+        return;
+    }
+}

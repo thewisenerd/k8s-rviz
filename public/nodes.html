@@ -13,18 +13,10 @@
         }
 
         #root {
+            margin-top: 16px;
             display: grid;
             grid-template-rows: auto;
             grid-template-columns: 50% 50%;
-        }
-
-        #statusText {
-            display: block;
-            position: absolute;
-            background: #fff;
-            padding: 5px;
-            border: 1px solid black;
-            border-radius: 2px;
         }
 
         #user-input {
@@ -47,6 +39,7 @@
 <body>
 <div id="user-input">
     <div id="user-input-pods-group" class="input-group">
+        <em>output of `kubectl get pods -A -o json`</em>
         <label for="user-input-pods">
             input pods:
             <input type="file" id="user-input-pods" accept="application/json">
@@ -54,11 +47,37 @@
         <span class="msg"></span>
     </div>
     <div id="user-input-nodes-group" class="input-group">
+        <em>output of `kubectl get nodes -o json`</em>
         <label for="user-input-nodes">
             input nodes:
             <input type="file" id="user-input-nodes" accept="application/json">
         </label>
         <span class="msg"></span>
+    </div>
+    <div id="user-input-namespace-group" class="input-group">
+        <label for="user-input-system-ns">
+            system ns:
+            <input type="text" id="user-input-system-ns">
+        </label>
+        <label for="user-input-infra-ns">
+            &nbsp;infra ns:
+            <input type="text" id="user-input-infra-ns">
+        </label>
+        <label for="user-input-prod-ns">
+            &nbsp;&nbsp;prod ns:
+            <input type="text" id="user-input-prod-ns">
+        </label>
+        <button type="button" id="user-input-ns-apply">apply</button>
+    </div>
+    <div id="user-input-filter-group" class="input-group">
+        <label for="user-input-node-filter">
+            node filter:
+            <input type="text" id="user-input-node-filter" value="">
+        </label>
+        <button type="button" id="user-input-filter-apply">filter</button>
+    </div>
+    <div id="user-input-reset-group" class="input-group">
+        <button type="button" id="user-input-reset">reset</button>
     </div>
 </div>
 <div id="root"></div>
