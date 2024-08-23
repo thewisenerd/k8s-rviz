@@ -1,6 +1,7 @@
 import {Container, Node, Pod} from "kubernetes-types/core/v1";
 import * as kv from './kv';
 import {renderImpl} from "./nodesRender";
+import {sampleNodes, samplePods} from "./nodesSample";
 
 const defaultNsGroupSystem = "(default|kube-(.*)|istio-(.*)|ingress-nginx)"
 const defaultNsGroupInfra = "(infra|monitoring)"
@@ -190,18 +191,18 @@ function render() {
 
 const nodesFormMsg = () => document.querySelector('#user-input-nodes-group > .msg');
 
-function onNodes(nodes: Node[]) {
+function onNodes(nodes: Node[], persist: boolean = true) {
     nodesFormMsg().innerHTML = `${nodes.length} nodes loaded!`
-    kv.set('nodes:nodeList', nodes);
+    if (persist) kv.set('nodes:nodeList', nodes);
     setState({nodes});
 }
 
 const podsFormMsg = () => document.querySelector('#user-input-pods-group > .msg');
 
-function onPods(pods: Pod[]) {
+function onPods(pods: Pod[], persist: boolean = true) {
     podsFormMsg().innerHTML = `${pods.length} pods loaded!`
     pods = pods.map(p => minifyPod(p));
-    kv.set('nodes:podList', pods);
+    if (persist) kv.set('nodes:podList', pods);
     setState({pods});
 }
 
@@ -334,12 +335,12 @@ function init() {
 
     const existingNodes = kv.load<Node[]>('nodes:nodeList');
     if (existingNodes) {
-        onNodes(existingNodes);
+        onNodes(existingNodes, false);
     }
 
     const existingPods = kv.load<Pod[]>('nodes:podList');
     if (existingPods) {
-        onPods(existingPods);
+        onPods(existingPods, false);
     }
 
     nsGroupLoad();
@@ -358,6 +359,12 @@ function init() {
     resetBtn.addEventListener('click', () => {
         reset();
     })
+
+    const sampleBtn = document.getElementById('user-input-sample');
+    sampleBtn.addEventListener('click', () => {
+        onNodes(sampleNodes, false);
+        onPods(samplePods, false);
+    });
 }
 
 init();
