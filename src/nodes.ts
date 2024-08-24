@@ -323,6 +323,14 @@ function reset() {
     kv.remove('nodes:ns:prod');
     kv.remove('nodes:filter:nodeFilter');
 
+    const sp = new URL(location.href);
+    sp.searchParams.delete('sample');
+    if (history.replaceState) {
+        let searchString = sp.searchParams.toString().length > 0 ? '?' + sp.searchParams.toString() : '';
+        let newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname +  searchString + window.location.hash;
+        history.replaceState(null, '', newUrl);
+    }
+
     alert(`all configs reset.`);
     setTimeout(() => {
         window.location.reload();
@@ -365,6 +373,12 @@ function init() {
         onNodes(sampleNodes, false);
         onPods(samplePods, false);
     });
+
+    const sp = new URLSearchParams(window.location.search);
+    if (sp.get('sample') === 'true') {
+        onNodes(sampleNodes, false);
+        onPods(samplePods, false);
+    }
 }
 
 init();
