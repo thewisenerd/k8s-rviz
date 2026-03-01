@@ -331,6 +331,7 @@ export function renderImpl(root: HTMLElement, params: Params, props: {
         const nodeBox = boxes.get(nodeName);
         if (nodeBox == undefined) {
             errors.push(`${podKey} unknown nodeName '${nodeName}'`);
+            return;
         }
         nodeBox.pods.push(pod);
     });
